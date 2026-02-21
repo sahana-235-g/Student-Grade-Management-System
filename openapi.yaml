@@ -1,0 +1,204 @@
+openapi: 3.0.3
+info:
+  title: Student Grade API
+  description: REST API for managing student grades (Canvas/Blackboard-like)
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+
+security:
+  - bearerAuth: []
+
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, email, password, role]
+              properties:
+                name: { type: string }
+                email: { type: string, format: email }
+                password: { type: string }
+                role: { type: string, enum: [admin, teacher, student] }
+      responses:
+        '201': { description: User registered }
+        '400': { description: Bad request }
+
+  /auth/login:
+    post:
+      summary: Login and get JWT token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string }
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token: { type: string }
+        '401': { description: Invalid credentials }
+
+  /api/users:
+    get:
+      summary: Get all users (admin)
+      tags: [Users]
+      responses:
+        '200': { description: List of users }
+    post:
+      summary: Create user (admin)
+      tags: [Users]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: { type: string }
+                email: { type: string }
+                password: { type: string }
+                role: { type: string }
+      responses:
+        '200': { description: User created }
+
+  /api/courses:
+    get:
+      summary: Get all courses
+      tags: [Courses]
+      responses:
+        '200': { description: List of courses }
+    post:
+      summary: Create course (admin, teacher)
+      tags: [Courses]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: { type: string }
+                code: { type: string }
+      responses:
+        '201': { description: Course created }
+
+  /api/courses/{id}/enroll:
+    post:
+      summary: Enroll student in course (admin, teacher)
+      tags: [Courses]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [student_id]
+              properties:
+                student_id: { type: string }
+      responses:
+        '200': { description: Student enrolled }
+
+  /api/grades:
+    post:
+      summary: Assign grade (teacher)
+      tags: [Grades]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [student_id, course_id, grade]
+              properties:
+                student_id: { type: string }
+                course_id: { type: string }
+                grade: { type: number }
+      responses:
+        '200': { description: Grade assigned }
+    put:
+      summary: Update grade (teacher)
+      tags: [Grades]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                student_id: { type: string }
+                course_id: { type: string }
+                grade: { type: number }
+      responses:
+        '200': { description: Grade updated }
+
+  /api/grades/{studentId}:
+    get:
+      summary: Get student grades
+      tags: [Grades]
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: List of grades }
+
+  /api/stats/gpa/{studentId}:
+    get:
+      summary: Get student GPA
+      tags: [Stats]
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  gpa: { type: number }
+
+  /api/stats/course-avg/{courseId}:
+    get:
+      summary: Get course average grade
+      tags: [Stats]
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  average: { type: number }
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

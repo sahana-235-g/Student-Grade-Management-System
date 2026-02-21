@@ -1,0 +1,25 @@
+# Student Grade API - Setup & Run
+
+## Role Permissions Matrix
+
+| Endpoint | Method | Admin | Teacher | Student |
+|----------|--------|:-----:|:-------:|:-------:|
+| /auth/register, /auth/login | POST | ✓ | ✓ | ✓ |
+| /api/users | GET, POST | ✓ | — | — |
+| /api/courses | GET | ✓ | ✓ | ✓ |
+| /api/courses | POST | ✓ | ✓ | — |
+| /api/courses/:id/enroll | POST | ✓ | ✓ | — |
+| /api/grades | POST, PUT | — | ✓ | — |
+| /api/grades/:studentId | GET | ✓ | ✓ | ✓ |
+| /api/stats/gpa/:studentId | GET | ✓ | ✓ | ✓ |
+| /api/stats/course-avg/:courseId | GET | ✓ | ✓ | ✓ |
+
+## Prerequisites
+- Go 1.21+ | Node.js 18+ | MongoDB
+
+## Setup
+
+1. SEED (first time): Uncomment seed.RunSeed() in cmd/main.go, run backend, comment back
+2. Seed users: admin@test.com/admin123 | teacher@test.com/teacher123 | student@test.com/student123
+3. Backend: go mod tidy && go run cmd/main.go  → http://localhost:8080
+4. Frontend: cd student-grade-frontend && npm install && npm run dev → http://localhost:5173
