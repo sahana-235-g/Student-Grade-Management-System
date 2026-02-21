@@ -20,6 +20,6 @@
 ## Setup
 
 1. SEED (first time): Uncomment seed.RunSeed() in cmd/main.go, run backend, comment back
-2. Seed users: admin@test.com/admin123 | teacher@test.com/teacher123 | student@test.com/student123
+2. Seed users: admin@gmail.com/admin123 | teacher1@gmail.com/teacher123 | sahana@test.com/sahana123
 3. Backend: go mod tidy && go run cmd/main.go  → http://localhost:8080
 4. Frontend: cd student-grade-frontend && npm install && npm run dev → http://localhost:5173
