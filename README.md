@@ -4,6 +4,7 @@ A complete Go (Golang) REST API for managing student grades similar to universit
 The system supports Admin, Teacher, and Student roles, course & grade management, GPA calculation, and statistics.
 
 1. Design and Implementation
+
 1.1 Approach
 
 RESTful API using Gin framework
