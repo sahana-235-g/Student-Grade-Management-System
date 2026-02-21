@@ -28,9 +28,10 @@ Explain how bson tags work in Go.
 
 ### 5. Business logic / GPA / stats
 ```
-No AI tools were used```
+No AI tools were used
+```
 
-### 6. Frontend (if any)
+### 6. Frontend 
 ```
 Help me set up a React + Vite + Tailwind frontend.
 Create login page UI for admin, teacher, and student roles.
@@ -40,7 +41,9 @@ Provide axios code for login and redirect based on role.
 
 ### 7. Documentation / README
 ```
-(Add prompts used for README, OpenAPI, or Postman collection.)
+Help me write a full README for my Golang project.
+Provide instructions on how to run backend and frontend.
+Help me document API endpoints and role permissions.
 ```
 
 
