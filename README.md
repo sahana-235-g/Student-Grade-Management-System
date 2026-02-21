@@ -10,7 +10,7 @@ RESTful API using Gin framework
 
 MongoDB for storage
 
-JWT Authentication
+Authentication
 
 Role-Based Access Control (RBAC)
 
